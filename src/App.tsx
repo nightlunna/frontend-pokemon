@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import Card from './components/Card/Card'
 import type { Pokemon } from './components/Card/Card'
+import * as S from './AppStyles';
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
   const [imagem, setImagem] = useState('')
   const [busca, setBusca] = useState('')
 
-  const urlpokemon: string = "http://localhost:5000/pokemon"
+  const urlpokemon: string = "https://qpz7gdhf-5173.brs.devtunnels.ms/pokemon"
 
   const fetchPokemon = async () => {
     try {
@@ -101,78 +102,97 @@ function App() {
     }
   }
 
+ return (
+    <S.Container>
+      <S.FormCard>
+        <h2 style={{ marginTop: 0, color: '#333' }}>Cadastrar Novo Pokémon</h2>
+        
+        {/* Linha 1: Nome, Tipo e Nível */}
+        <S.Row>
+          <S.InputGroup>
+            <S.Label>Nome</S.Label>
+            <S.Input type='text' placeholder='Ex: Piplup' value={nome} onChange={(e) => setNome(e.target.value)} />
+          </S.InputGroup>
+          <S.InputGroup>
+            <S.Label>Tipo</S.Label>
+            <S.Input type='text' placeholder='Ex: Água' value={tipo} onChange={(e) => setTipo(e.target.value)} />
+          </S.InputGroup>
+          <S.InputGroup>
+            <S.Label>Nível</S.Label>
+            <S.Input type='number' min={1} max={100} placeholder='1-100' value={nivel} onChange={(e) => setNivel(e.target.value)} />
+          </S.InputGroup>
+        </S.Row>
 
+        {/* Linha 2: Status Básicos */}
+        <S.Row>
+          <S.InputGroup>
+            <S.Label>HP</S.Label>
+            <S.Input type='number' min={1} max={255} value={hp} onChange={(e) => setHp(e.target.value)} />
+          </S.InputGroup>
+          <S.InputGroup>
+            <S.Label>Ataque</S.Label>
+            <S.Input type='number' min={1} max={255} value={ataque} onChange={(e) => setAtaque(e.target.value)} />
+          </S.InputGroup>
+          <S.InputGroup>
+            <S.Label>Defesa</S.Label>
+            <S.Input type='number' min={1} max={255} value={defesa} onChange={(e) => setDefesa(e.target.value)} />
+          </S.InputGroup>
+        </S.Row>
 
-  return (
-    <>
+        {/* Linha 3: Status Especiais */}
+        <S.Row>
+          <S.InputGroup>
+            <S.Label>Ataque Especial</S.Label>
+            <S.Input type='number' min={1} max={255} value={ataque_especial} onChange={(e) => setAtaque_especial(e.target.value)} />
+          </S.InputGroup>
+          <S.InputGroup>
+            <S.Label>Defesa Especial</S.Label>
+            <S.Input type='number' min={1} max={255} value={defesa_especial} onChange={(e) => setDefesa_especial(e.target.value)} />
+          </S.InputGroup>
+          <S.InputGroup>
+            <S.Label>Velocidade</S.Label>
+            <S.Input type='number' min={1} max={255} value={velocidade} onChange={(e) => setVelocidade(e.target.value)} />
+          </S.InputGroup>
+        </S.Row>
 
-      <div>
-        <div>
-          <label>Nome</label>
-          <input type='text' placeholder='Piplup' value={nome} onChange={(e) => setNome(e.target.value)} />
-          <label>Tipo</label>
-          <input type='text' placeholder='Água' value={tipo} onChange={(e) => setTipo(e.target.value)} />
-          <label>Nível</label>
-          <input type='number' min={1} max={100} value={nivel} onChange={(e) => setNivel(e.target.value)} />
-        </div>
+        {/* Linha 4: Imagem */}
+        <S.Row>
+          <S.InputGroup>
+            <S.Label>URL da Imagem</S.Label>
+            <S.Input type='text' placeholder='https://...' value={imagem} onChange={(e) => setImagem(e.target.value)} />
+          </S.InputGroup>
+        </S.Row>
 
-        <div>
-          <label>HP</label>
-          <input type='number' min={1} max={255} value={hp} onChange={(e) => setHp(e.target.value)} />
-          <label>Ataque</label>
-          <input type='number' min={1} max={255} value={ataque} onChange={(e) => setAtaque(e.target.value)} />
-          <label>Defesa</label>
-          <input type='number' min={1} max={255} value={defesa} onChange={(e) => setDefesa(e.target.value)} />
-        </div>
+        <S.Button onClick={() => { postPokemon() }}>
+          Adicionar Pokémon
+        </S.Button>
+      </S.FormCard>
 
-        <div>
-          <label>Ataque Especial</label>
-          <input type='number' min={1} max={255} value={ataque_especial} onChange={(e) => setAtaque_especial(e.target.value)} />
-          <label>Defesa Especial</label>
-          <input type='number' min={1} max={255} value={defesa_especial} onChange={(e) => setDefesa_especial(e.target.value)} />
-          <label>Velocidade</label>
-          <input type='number' min={1} max={255} value={velocidade} onChange={(e) => setVelocidade(e.target.value)} />
-        </div>
+      {/* Barra de Busca */}
+      <S.SearchContainer>
+        <S.Label style={{ fontSize: '1.1rem' }}>Pesquisar na Pokédex</S.Label>
+        <S.Input 
+          type="text" 
+          placeholder="Digite o nome do Pokémon..." 
+          style={{ width: '100%', boxSizing: 'border-box', marginTop: '10px' }}
+          onChange={(e) => {
+            setBusca(e.target.value);
+          }} 
+        />
+      </S.SearchContainer>
 
-        <div>
-          <label>Imagem</label>
-          <input type='text' value={imagem} onChange={(e) => setImagem(e.target.value)} />
-        </div>
-
-        <button onClick={() => { postPokemon() }}>
-          Adiciona ai
-        </button>
-      </div>
-
-      <div>
-        <input type="text" onChange={(e) => {
-          setBusca(e.target.value);
-          buscaPokemon();
-        }} />
-      </div>
-
-      <div style={{gap: "20px", margin: '30px'}}>
+      {/* Lista de Cards */}
+      <S.CardList>
         {listapokemon.map(pokemon => (
           <Card
             key={pokemon.identificador}
-            imagem={pokemon.imagem}
-            nome={pokemon.nome}
-            tipo={pokemon.tipo}
-            nivel={pokemon.nivel}
-            hp={pokemon.hp}
-            ataque={pokemon.ataque}
-            defesa={pokemon.defesa}
-            ataque_especial={pokemon.ataque_especial}
-            defesa_especial={pokemon.defesa_especial}
-            velocidade={pokemon.velocidade}
-            identificador={pokemon.identificador}
+            {...pokemon} 
             onDelete={() => { }}
           />
         ))}
-      </div>
-    </>
-  )
+      </S.CardList>
+    </S.Container>
+  );
 }
 
 export default App
-

@@ -1,5 +1,4 @@
-import styles from "./styles.module.css"
- 
+import * as S from "./CardStyles";
 
 export interface Pokemon { 
   imagem: string;
@@ -12,67 +11,71 @@ export interface Pokemon {
   ataque_especial: number;
   defesa_especial: number;
   velocidade: number;
-  identificador: number;
-  onDelete: () => void;
+  identificador: string;
+  onDelete?: (id: string) => void;
 }
 
-function Card({ imagem, nome, tipo, nivel, hp, ataque, defesa, ataque_especial, defesa_especial, velocidade, identificador, onDelete }: Pokemon) {
-
-  const statusmaximo: number = 255
+function Card(props: Pokemon) {
+  const statusmaximo: number = 255;
 
   function Mapnumber(value: number, max: number) {
-    const percentual = (value / max) * 100
-    return `${percentual}px`
+    const percentual = (value / max) * 100;
+    return `${percentual}%`;
   }
 
   return (
-    <div className={styles.card}>
-      <img src={imagem} alt={nome} width="auto" height="250" />
+    <S.card>
+      <img src={props.imagem} alt={props.nome} width="auto" height="250" />
 
-      <div className={styles.info}>
-        <h1>{nome}</h1>
-        <div className={styles.tipoContainer}>
-          <h3 className={styles.tipo}> {tipo} </h3>
-        </div>
-      </div>
+      <S.info>
+        <h1>{props.nome}</h1>
+        <S.tipoContainer>
+          <h3 style={{ margin: 0 }}> {props.tipo} </h3>
+        </S.tipoContainer>
+      </S.info>
 
-      <div className={styles.statusContainer}>
+      <S.statusContainer>
         <h2> Status do Pokémon </h2>
 
-        <div className={styles.habilidades}>
-          <div className={styles.habilidade}>
-            <h1>{nivel}</h1>
+        <S.habilidades>
+          <S.habilidade>
+            <h1>{props.nivel}</h1>
             <h3>nível</h3>
-          </div>
-          <div className={styles.habilidade}>
-            <div style={{ backgroundColor: "blueviolet", width: "65%", height: Mapnumber(hp, statusmaximo) }}></div>
-            <h3>hp</h3>
-          </div>
-          <div className={styles.habilidade}>
-            <div style={{ backgroundColor: "blueviolet", width: "65%", height: Mapnumber(ataque, statusmaximo) }}></div>
-            <h3>ataque</h3>
-          </div>
-          <div className={styles.habilidade}>
-            <div style={{ backgroundColor: "blueviolet", width: "65%", height: Mapnumber(defesa, statusmaximo) }}></div>
-            <h3>defesa</h3>
-          </div>
-          <div className={styles.habilidade}>
-            <div style={{ backgroundColor: "blueviolet", width: "65%", height: Mapnumber(ataque_especial, statusmaximo) }}></div>
-            <h3>ataque sp.</h3>
-          </div>
-          <div className={styles.habilidade}>
-            <div style={{ backgroundColor: "blueviolet", width: "65%", height: Mapnumber(defesa_especial, statusmaximo) }}></div>
-            <h3>defesa sp.</h3>
-          </div>
-          <div className={styles.habilidade}>
-            <div style={{ backgroundColor: "blueviolet", width: "65%", height: Mapnumber(velocidade, statusmaximo) }}></div>
-            <h3>velocidade</h3>
-          </div>
-        </div>
+          </S.habilidade>
 
-      </div>
-    </div>
-  )
+          <S.habilidade>
+            <S.barrinha altura={Mapnumber(props.hp, statusmaximo)} />
+            <h3>hp</h3>
+          </S.habilidade>
+
+          <S.habilidade>
+            <S.barrinha altura={Mapnumber(props.ataque, statusmaximo)} />
+            <h3>ataque</h3>
+          </S.habilidade>
+
+          <S.habilidade>
+            <S.barrinha altura={Mapnumber(props.defesa, statusmaximo)} />
+            <h3>defesa</h3>
+          </S.habilidade>
+
+          <S.habilidade>
+            <S.barrinha altura={Mapnumber(props.ataque_especial, statusmaximo)} />
+            <h3>atq sp.</h3>
+          </S.habilidade>
+
+          <S.habilidade>
+            <S.barrinha altura={Mapnumber(props.defesa_especial, statusmaximo)} />
+            <h3>def sp.</h3>
+          </S.habilidade>
+
+          <S.habilidade>
+            <S.barrinha altura={Mapnumber(props.velocidade, statusmaximo)} />
+            <h3>velocidade</h3>
+          </S.habilidade>
+        </S.habilidades>
+      </S.statusContainer>
+    </S.card>
+  );
 }
 
 export default Card;
