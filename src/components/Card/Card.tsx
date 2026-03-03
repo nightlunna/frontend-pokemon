@@ -41,7 +41,7 @@ function Card({ imagem, nome, tipo, nivel, hp, ataque, defesa, ataque_especial, 
 
         <div className={styles.habilidades}>
           <div className={styles.habilidade}>
-            <div style={{ backgroundColor: "blueviolet", width: "65%", height: Mapnumber(nivel, 100) }}></div>
+            <h1>{nivel}</h1>
             <h3>nível</h3>
           </div>
           <div className={styles.habilidade}>
